@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Guide – Credit Card Fraud Detection</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav style="background:#2c3e50; padding:10px; display:flex; gap:20px;">
+  <a href="index.html" style="color:white; text-decoration:none;">🏠 Home</a>
+  <a href="dashboard.html" style="color:white; text-decoration:none;">📊 Dashboard</a>
+  <a href="guide.html" style="color:white; text-decoration:none;">📘 Guide</a>
+</nav>
+
+  <h1>📘 Guide to Using the Fraud Detection System</h1>
+
+  <section>
+    <h2>🔍 How Credit Card Fraud Happens</h2>
+    <p>Fraudulent actors may steal card information through phishing, data breaches, or skimming devices. They perform unauthorized transactions online or in-store.</p>
+  </section>
+
+  <section>
+    <h2>💡 Features Used in Detection</h2>
+    <ul>
+      <li><strong>creditLimit</strong> – The total credit limit on the card</li>
+      <li><strong>availableCredit</strong> – Current unused credit</li>
+      <li><strong>amount</strong> – Transaction amount</li>
+      <li><strong>paymentDueInDays</strong> – Days left before bill is due</li>
+      <li><strong>lastPaymentAmount</strong> – Amount paid in last billing cycle</li>
+      <li><strong>transactionType</strong> – e.g., "purchase", "cash_advance", "payment"</li>
+      <li><strong>merchantCategoryCode</strong> – Type of merchant (e.g., grocery, travel)</li>
+      <li><strong>geoLocation</strong> – Region of transaction</li>
+      <li><strong>timeOfDay</strong> – Morning, afternoon, evening, or night</li>
+      <li><strong>isCardPresent</strong> – True if card was physically present</li>
+      <li><strong>isForeignTransaction</strong> – True if transaction is international</li>
+      <li><strong>isFlaggedFraud</strong> – Manually flagged as suspicious by bank</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🧠 How AI Detects Fraud</h2>
+    <p>The system analyzes behavior patterns and flags high-risk transactions. For example:</p>
+    <ul>
+      <li>⚠️ Large amounts with card not present</li>
+      <li>🌍 International transaction with low balance</li>
+      <li>🚩 Manually flagged as fraud</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🛡️ How This App Helps</h2>
+    <p>It gives an instant prediction using AI with a human-style explanation to help you understand why a transaction is safe or risky.</p>
+  </section>
+</body>
+</html>
