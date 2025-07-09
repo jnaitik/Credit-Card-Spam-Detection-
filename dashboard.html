@@ -1,1 +1,123 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fraud Detection Dashboard</title>
 
+  <!-- Link to custom CSS -->
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>📊 Credit Card Fraud Detection Dashboard</header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="guide.html">Guide</a>
+  </nav>
+
+  <div class="container">
+    <div class="chart-card">
+      <h3>Fraud vs Safe Transactions</h3>
+      <canvas id="fraudStatsChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Transaction Types</h3>
+      <canvas id="transactionTypeChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Merchant Categories</h3>
+      <canvas id="merchantCategoryChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Card Presence</h3>
+      <canvas id="cardPresenceChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Average Amount by Fraud</h3>
+      <canvas id="avgAmountChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Dashboard JS to load charts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/dashboard-data");
+        const data = await res.json();
+
+        // 1. Fraud Stats
+        new Chart(document.getElementById("fraudStatsChart"), {
+          type: "bar",
+          data: {
+            labels: Object.keys(data.fraudStats).map(k => k === "1" ? "Fraud" : "Safe"),
+            datasets: [{
+              label: "Count",
+              data: Object.values(data.fraudStats),
+              backgroundColor: ["#e74c3c", "#2ecc71"]
+            }]
+          }
+        });
+
+        // 2. Transaction Type
+        new Chart(document.getElementById("transactionTypeChart"), {
+          type: "pie",
+          data: {
+            labels: Object.keys(data.transactionType),
+            datasets: [{
+              data: Object.values(data.transactionType),
+              backgroundColor: ["#3498db", "#f1c40f", "#9b59b6", "#1abc9c"]
+            }]
+          }
+        });
+
+        // 3. Merchant Category
+        new Chart(document.getElementById("merchantCategoryChart"), {
+          type: "pie",
+          data: {
+            labels: Object.keys(data.merchantCategory),
+            datasets: [{
+              data: Object.values(data.merchantCategory),
+              backgroundColor: ["#e67e22", "#16a085", "#2980b9", "#8e44ad", "#d35400", "#2ecc71", "#f39c12", "#8e44ad"]
+            }]
+          }
+        });
+
+        // 4. Card Presence
+        new Chart(document.getElementById("cardPresenceChart"), {
+          type: "bar",
+          data: {
+            labels: Object.keys(data.cardPresence).map(k => k === "true" ? "Card Present" : "Card Not Present"),
+            datasets: [{
+              label: "Transactions",
+              data: Object.values(data.cardPresence),
+              backgroundColor: ["#27ae60", "#d35400"]
+            }]
+          }
+        });
+
+        // 5. Average Amount
+        new Chart(document.getElementById("avgAmountChart"), {
+          type: "bar",
+          data: {
+            labels: Object.keys(data.avgAmounts).map(k => k === "1" ? "Fraud" : "Safe"),
+            datasets: [{
+              label: "Avg Amount ($)",
+              data: Object.values(data.avgAmounts),
+              backgroundColor: ["#c0392b", "#2980b9"]
+            }]
+          }
+        });
+
+      } catch (err) {
+        alert("❌ Error loading dashboard data. Is backend running?");
+        console.error("Dashboard Load Error:", err);
+      }
+    });
+  </script>
+</body>
+</html>
